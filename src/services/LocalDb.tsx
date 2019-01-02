@@ -26,9 +26,12 @@ class LocalDb {
     }
 
     putContacts(contacts: object[]) {
-        // @TODO : Clear cache
         return this.getContactStore(true).then(store => {
-            return store.put(contacts)
+            return store.clearAllData()
+        }).then(() => {
+            return this.getContactStore(true).then(store => {
+                return store.put(contacts)
+            })
         })
     }
 
