@@ -2,6 +2,7 @@ using ReactNative;
 using ReactNative.Modules.Core;
 using ReactNative.Shell;
 using System.Collections.Generic;
+using Org.PGSQLite.SQLitePlugin;
 
 namespace RXPContactBook
 {
@@ -24,6 +25,7 @@ namespace RXPContactBook
         protected override List<IReactPackage> Packages => new List<IReactPackage>
         {
             new MainReactPackage(),
+            new SQLitePluginPackage(),
         };
     }
 }

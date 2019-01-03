@@ -208,6 +208,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\node_modules\react-native-sqlite-storage\src\windows\SQLitePlugin\SQLitePlugin.csproj">
+      <Project>{6a1f04d0-8750-11e6-aade-eb9eac8d95cf}</Project>
+      <Name>SQLitePlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\node_modules\react-native-windows\ReactWindows\ReactNative\ReactNative.csproj">
       <Project>{c7673ad5-e3aa-468c-a5fd-fa38154e205c}</Project>
       <Name>ReactNative</Name>

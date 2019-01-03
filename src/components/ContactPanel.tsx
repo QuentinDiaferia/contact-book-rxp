@@ -82,6 +82,8 @@ class ContactPanel extends Component<ContactProps, ContactState> {
         this.setState({status: 'LOADING'})
         return Contacts.listCache().then(data => {
             this.setItems(data)
+        }).catch(() => {
+            this.setState({status: 'IDLE'})
         })
     }
 
@@ -89,6 +91,8 @@ class ContactPanel extends Component<ContactProps, ContactState> {
         this.setState({status: 'LOADING'})
         return Contacts.list().then(response => {
             this.setItems(response.data)
+        }).catch(() => {
+            this.setState({status: 'IDLE'})
         })
     }
 

@@ -48,8 +48,6 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
     private renderItem() {
         if (this.state.status === 'LOADING') {
             return <Loader />
-        } else if (this.state.status === 'ERROR') {
-            return 'ERROR'
         }
         return <View style={styles.container}>
             {this.state.item ? this.state.item.name : null}
@@ -81,7 +79,7 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             this.setItem(data)
         }).catch(() => {
             this.setState({
-                status: 'ERROR',
+                status: 'IDLE',
             })
         })
     }
@@ -92,7 +90,7 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             this.setItem(response.data)
         }).catch(() => {
             this.setState({
-                status: 'ERROR',
+                status: 'IDLE',
             })
         })
     }
