@@ -1,5 +1,5 @@
 import React from 'react'
-import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
+import {Component, CommonProps, View, Button, Text} from 'reactxp'
 import {VirtualListView, VirtualListViewItemInfo} from 'reactxp-virtuallistview'
 
 import {styles} from '../assets/Style'
