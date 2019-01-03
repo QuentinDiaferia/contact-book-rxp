@@ -36,14 +36,16 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             useSafeInsets={true}
             style={styles.container}
         >
-            <Button
-                style={styles.roundButton}
-                onPress={this.props.onNavigateBack}
-            >
-                <Text style={styles.buttonText}>
-                    Go Back
-                </Text>
-            </Button>
+            <View style={styles.contactHeader}>
+                <Button
+                    style={styles.roundButton}
+                    onPress={this.props.onNavigateBack}
+                >
+                    <Text style={styles.buttonText}>
+                        Go Back
+                    </Text>
+                </Button>
+            </View>
             {this.renderItem()}
         </View>
     }
@@ -57,15 +59,9 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
         </View>
     }
 
-    private isOnline() {
-        return window.navigator.onLine
-    }
-
     private loadItem() {
         this.loadFromCache().then(() => {
-            if (this.isOnline()) {
-                this.loadFromAPI()
-            }
+            this.loadFromAPI()
         })
     }
 

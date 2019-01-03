@@ -13,11 +13,13 @@ export const styles = {
         flex: 1,
         alignItems: 'center',
     }),
-    titleText: Styles.createTextStyle({
-        fontSize: 16,
-        textAlign: 'center',
-        marginTop: 12,
-        color: 'black'
+    contactHeader: Styles.createViewStyle({
+        height: 60,
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
     }),
     roundButton: Styles.createViewStyle({
         margin: 16,
@@ -28,7 +30,12 @@ export const styles = {
         fontSize: 16,
         marginVertical: 6,
         marginHorizontal: 12,
-        color: 'white'
+        color: 'white',
+    }),
+    list: Styles.createViewStyle({
+        flexDirection: 'column',
+        alignSelf: 'stretch',
+        backgroundColor: 'white',
     }),
     listItem: Styles.createViewStyle({
         alignItems: 'center',

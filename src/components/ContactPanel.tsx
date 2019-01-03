@@ -10,7 +10,7 @@ import ContactModel from '../models/Contact'
 import Loader from './ui/Loader'
 import ContactItem from './ContactItem'
 
-interface ContactInfo extends VirtualListViewItemInfo {
+interface ContactItemInfo extends VirtualListViewItemInfo {
     id: string,
     name: string,
 }
@@ -23,7 +23,7 @@ interface ContactProps extends CommonProps {
 interface ContactState {
     status: string,
     currentAction?: string,
-    contacts: ContactInfo[],
+    contacts: ContactItemInfo[],
 }
 
 class ContactPanel extends Component<ContactProps, ContactState> {
@@ -46,27 +46,23 @@ class ContactPanel extends Component<ContactProps, ContactState> {
             useSafeInsets={true}
             style={styles.container}
         >
-            <Button
-                style={styles.roundButton}
-                onPress={this.props.onNavigateBack}
-            >
-                <Text style={styles.buttonText}>
-                    Go Back
-                </Text>
-            </Button>
+            <View style={styles.contactHeader}>
+                <Button
+                    style={styles.roundButton}
+                    onPress={this.props.onNavigateBack}
+                >
+                    <Text style={styles.buttonText}>
+                        Go Back
+                    </Text>
+                </Button>
+            </View>
             {this.renderList()}
         </View>
     }
 
-    private isOnline() {
-        return window.navigator.onLine
-    }
-
     private loadItems() {
         this.loadFromCache().then(() => {
-            if (this.isOnline()) {
-                this.loadFromAPI()
-            }
+            this.loadFromAPI()
         })
     }
 
@@ -106,12 +102,13 @@ class ContactPanel extends Component<ContactProps, ContactState> {
         return <VirtualListView
             itemList={this.state.contacts}
             renderItem={this.renderContact}
+            style={styles.list}
             animateChanges={true}
             skipRenderIfItemUnchanged={true}
         />
     }
 
-    private renderContact(item: ContactInfo) {
+    private renderContact(item: ContactItemInfo) {
         return <ContactItem
             item={item}
             goToContactView={this.props.goToContactView}
