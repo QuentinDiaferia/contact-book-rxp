@@ -1,5 +1,5 @@
 import React from 'react'
-import {Component, CommonProps, View, Button, Text} from 'reactxp'
+import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
 import {VirtualListView, VirtualListViewItemInfo} from 'reactxp-virtuallistview'
 
 import {styles} from '../assets/Style'
@@ -42,7 +42,10 @@ class ContactPanel extends Component<ContactProps, ContactState> {
     }
 
     render() {
-        return <View style={styles.container}>
+        return <View
+            useSafeInsets={true}
+            style={styles.container}
+        >
             <Button
                 style={styles.roundButton}
                 onPress={this.props.onNavigateBack}
@@ -101,7 +104,6 @@ class ContactPanel extends Component<ContactProps, ContactState> {
             return <Loader />
         }
         return <VirtualListView
-            style={styles.list}
             itemList={this.state.contacts}
             renderItem={this.renderContact}
             animateChanges={true}

@@ -26,7 +26,10 @@ class MainPanel extends RX.Component<MainPanelProps, RX.Stateless> {
     }
 
     render() {
-        return <RX.View style={styles.container}>
+        return <RX.View
+            useSafeInsets={true}
+            style={styles.container}
+        >
             <RX.Button
                 style={styles.roundButton}
                 onPress={this.goToContactPanel}

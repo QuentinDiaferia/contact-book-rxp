@@ -1,5 +1,5 @@
 import React from 'react'
-import {Component, CommonProps, View, Button, Text} from 'reactxp'
+import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
 
 import {styles} from '../assets/Style'
 
@@ -32,7 +32,10 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
     }
 
     render() {
-        return <View style={styles.container}>
+        return <View
+            useSafeInsets={true}
+            style={styles.container}
+        >
             <Button
                 style={styles.roundButton}
                 onPress={this.props.onNavigateBack}

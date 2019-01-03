@@ -33,10 +33,7 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
     }
 
     render() {
-        return <RX.View
-            useSafeInsets={true}
-            style={styles.root}
-        >
+        return <RX.View style={styles.root}>
             <Navigator
                 delegateSelector={DelegateSelector}
                 renderScene={this.renderScene}
@@ -50,6 +47,12 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
     }
 
     private renderScene = (navigatorRoute: Types.NavigatorRoute) => {
+        return <RX.View style={styles.appWrapper}>
+            {this.router(navigatorRoute)}
+        </RX.View>
+    }
+
+    private router = (navigatorRoute: Types.NavigatorRoute) => {
         switch (navigatorRoute.routeId) {
             case NavigationRouteId.MainPanel:
                 return (
