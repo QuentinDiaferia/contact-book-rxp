@@ -8,7 +8,7 @@ class Contacts {
 
     list() {
         return axios.get(this.url).then((response: {data: ContactModel[]}) => {
-            LocalDb.putContacts(response.data)
+            LocalDb.insertContacts(response.data)
             return response
         })
     }
@@ -18,7 +18,10 @@ class Contacts {
     }
 
     get(id: string) {
-        return axios.get(this.url + id).then((response: {data: ContactModel[]}) => response)
+        return axios.get(this.url + id).then((response: {data: ContactModel}) => {
+            LocalDb.putContact(response.data)
+            return response
+        })
     }
 
     getCache(id: string) {

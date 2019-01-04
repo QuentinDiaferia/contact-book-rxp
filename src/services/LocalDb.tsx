@@ -43,7 +43,7 @@ class LocalDb {
         }).toEs6Promise()
     }
 
-    putContacts(contacts: object[]) {
+    insertContacts(contacts: object[]) {
         if (!this.cacheEnabled) {
             return this.getErrorResponse()
         }
@@ -52,6 +52,19 @@ class LocalDb {
         }).then(() => {
             return this.getContactStore(true).then(store => {
                 return store.put(contacts)
+            })
+        })
+    }
+
+    putContact(contact: object) {
+        if (!this.cacheEnabled) {
+            return this.getErrorResponse()
+        }
+        return this.getContactStore(true).then(store => {
+            return store.clearAllData()
+        }).then(() => {
+            return this.getContactStore(true).then(store => {
+                return store.put(contact)
             })
         })
     }
