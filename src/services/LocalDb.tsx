@@ -20,18 +20,32 @@ class LocalDb {
         this.openProvider(availableProviders)
     }
 
-    getContacts() {
+    getAllContacts() {
         if (!this.cacheEnabled) {
-            return new Promise(resolve => resolve([]))
+            return this.getErrorResponse()
         }
         return this.getContactStore(false).then(store => {
             return store.openPrimaryKey().getAll()
-        })
+        }).toEs6Promise()
+    }
+
+    getContact(id: string) {
+        if (!this.cacheEnabled) {
+            return this.getErrorResponse()
+        }
+        return this.getContactStore(false).then(store => {
+            return store.openPrimaryKey().getOnly(id)
+        }).then(contact => {
+            if (contact.length) {
+                return contact.shift()
+            }
+            return []
+        }).toEs6Promise()
     }
 
     putContacts(contacts: object[]) {
         if (!this.cacheEnabled) {
-            return new Promise(resolve => resolve([]))
+            return this.getErrorResponse()
         }
         return this.getContactStore(true).then(store => {
             return store.clearAllData()
@@ -40,6 +54,10 @@ class LocalDb {
                 return store.put(contacts)
             })
         })
+    }
+
+    private getErrorResponse() {
+        return new Promise(resolve => resolve([]))
     }
 
     private openProvider(availableProviders: DbProvider[], index = 0) {

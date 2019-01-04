@@ -1,39 +1,28 @@
 import axios from 'axios'
-
 import {API_URL} from '../config'
-
 import LocalDb from './LocalDb'
-
 import ContactModel from '../models/Contact'
 
 class Contacts {
     private url: string = API_URL + 'users/'
 
     list() {
-        return axios.get(this.url).then(response => {
+        return axios.get(this.url).then((response: {data: ContactModel[]}) => {
             LocalDb.putContacts(response.data)
             return response
         })
     }
 
     listCache() {
-        return LocalDb.getContacts().then(data => {
-            return data as ContactModel[]
-        })
+        return LocalDb.getAllContacts().then((data: ContactModel[]) => data)
     }
 
     get(id: string) {
-        return axios.get(this.url + id)
+        return axios.get(this.url + id).then((response: {data: ContactModel[]}) => response)
     }
 
     getCache(id: string) {
-        return LocalDb.getContacts().then(cacheData => {
-            const data = cacheData.find((e: ContactModel) => e.id === id)
-            if (data === undefined) {
-                throw new Error()
-            }
-            return data as ContactModel
-        })
+        return LocalDb.getContact(id).then((data: ContactModel) => data)
     }
 }
 
