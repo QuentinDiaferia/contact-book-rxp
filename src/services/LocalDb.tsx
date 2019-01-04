@@ -14,18 +14,25 @@ const appSchema: DbSchema = {
 
 class LocalDb {
     private db?: DbProvider
+    private cacheEnabled = true
 
     open(availableProviders: DbProvider[]) {
         this.openProvider(availableProviders)
     }
 
     getContacts() {
+        if (!this.cacheEnabled) {
+            return new Promise(resolve => resolve([]))
+        }
         return this.getContactStore(false).then(store => {
             return store.openPrimaryKey().getAll()
         })
     }
 
     putContacts(contacts: object[]) {
+        if (!this.cacheEnabled) {
+            return new Promise(resolve => resolve([]))
+        }
         return this.getContactStore(true).then(store => {
             return store.clearAllData()
         }).then(() => {
@@ -37,7 +44,7 @@ class LocalDb {
 
     private openProvider(availableProviders: DbProvider[], index = 0) {
         const provider = availableProviders[index]
-        if (index <= availableProviders.length) {
+        if (provider && index <= availableProviders.length) {
             provider.open(dbName, appSchema, false, false).then(
                 () => {
                     this.db = provider
@@ -46,6 +53,8 @@ class LocalDb {
                     this.openProvider(availableProviders, ++index)
                 }
             )
+        } else {
+            this.cacheEnabled = false
         }
     }
 
