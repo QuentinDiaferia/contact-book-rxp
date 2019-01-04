@@ -1,6 +1,5 @@
 import React from 'react'
-import {Component, CommonProps, View, Button, Text} from 'reactxp'
-import {VirtualListView, VirtualListViewItemInfo} from 'reactxp-virtuallistview'
+import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
 
 import {styles} from '../assets/Style'
 
@@ -10,11 +9,6 @@ import ContactModel from '../models/Contact'
 import Loader from './ui/Loader'
 import ContactItem from './ContactItem'
 
-interface ContactItemInfo extends VirtualListViewItemInfo {
-    id: string,
-    name: string,
-}
-
 interface ContactProps extends CommonProps {
     onNavigateBack: () => void,
     goToContactView: (id: string) => void,
@@ -23,7 +17,7 @@ interface ContactProps extends CommonProps {
 interface ContactState {
     status: string,
     currentAction?: string,
-    contacts: ContactItemInfo[],
+    contacts: ContactModel[],
 }
 
 class ContactPanel extends Component<ContactProps, ContactState> {
@@ -34,7 +28,6 @@ class ContactPanel extends Component<ContactProps, ContactState> {
             currentAction: undefined,
             contacts: [],
         }
-        this.renderContact = this.renderContact.bind(this)
     }
 
     componentDidMount() {
@@ -66,14 +59,10 @@ class ContactPanel extends Component<ContactProps, ContactState> {
         })
     }
 
-    private setItems(data: object[]) {
+    private setItems(data: ContactModel[]) {
         this.setState({
             status: 'IDLE',
-            contacts: data.map((e: ContactModel) => Object.assign({}, e, {
-                key: e.id,
-                template: "contact",
-                height: 32,
-            })),
+            contacts: data,
         })
     }
 
@@ -99,20 +88,15 @@ class ContactPanel extends Component<ContactProps, ContactState> {
         if (this.state.status === 'LOADING') {
             return <Loader />
         }
-        return <VirtualListView
-            itemList={this.state.contacts}
-            renderItem={this.renderContact}
-            style={styles.list}
-            animateChanges={true}
-            skipRenderIfItemUnchanged={true}
-        />
-    }
-
-    private renderContact(item: ContactItemInfo) {
-        return <ContactItem
-            item={item}
-            goToContactView={this.props.goToContactView}
-        />
+        return <ScrollView style={styles.list}>
+            {this.state.contacts.map(contact => {
+                return <ContactItem
+                    item={contact}
+                    key={contact.id}
+                    goToContactView={this.props.goToContactView}
+                />
+            })}
+        </ScrollView>
     }
 }
 

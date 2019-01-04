@@ -55,7 +55,9 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             return <Loader />
         }
         return <View style={styles.container}>
-            {this.state.item ? this.state.item.name : null}
+            <Text>
+                {this.state.item ? this.state.item.name : null}
+            </Text>
         </View>
     }
 

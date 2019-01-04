@@ -7,7 +7,7 @@ import LocalDb from './LocalDb'
 import ContactModel from '../models/Contact'
 
 class Contacts {
-    private url: string = API_URL + 'contacts/'
+    private url: string = API_URL + 'users/'
 
     list() {
         return axios.get(this.url).then(response => {
@@ -18,7 +18,7 @@ class Contacts {
 
     listCache() {
         return LocalDb.getContacts().then(data => {
-            return data
+            return data as ContactModel[]
         })
     }
 

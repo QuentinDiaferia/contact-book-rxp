@@ -33,9 +33,7 @@ export const styles = {
         color: 'white',
     }),
     list: Styles.createViewStyle({
-        flexDirection: 'column',
         alignSelf: 'stretch',
-        backgroundColor: 'white',
     }),
     listItem: Styles.createViewStyle({
         alignItems: 'center',

@@ -16,7 +16,7 @@ class LocalDb {
     private db?: DbProvider
 
     open(availableProviders: DbProvider[]) {
-        this.openProvider(availableProviders, 0)
+        this.openProvider(availableProviders)
     }
 
     getContacts() {
@@ -35,7 +35,7 @@ class LocalDb {
         })
     }
 
-    private openProvider(availableProviders: DbProvider[], index: number) {
+    private openProvider(availableProviders: DbProvider[], index = 0) {
         const provider = availableProviders[index]
         if (index <= availableProviders.length) {
             provider.open(dbName, appSchema, false, false).then(

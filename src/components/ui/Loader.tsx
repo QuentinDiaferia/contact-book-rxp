@@ -4,8 +4,8 @@ import {Component, ActivityIndicator} from 'reactxp'
 class Loader extends Component {
     render() {
         return <ActivityIndicator
-            color='#f0f0f0'
-            size='medium'
+            color='#848484'
+            size='large'
         />
     }
 }
