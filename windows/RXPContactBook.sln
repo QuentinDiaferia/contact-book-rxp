@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga.uwp", "..\node_modules
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLitePlugin", "..\node_modules\react-native-sqlite-storage\src\windows\SQLitePlugin\SQLitePlugin.csproj", "{6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLitePlugin", "../\node_modules\react-native-sqlite-storage\src\windows\SQLitePlugin\SQLitePlugin.csproj", "{6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
@@ -79,6 +81,30 @@ Global
 		637e6da1-c2f2-45f1-b9e1-9a5465fc52f3.ReleaseBundle|x86.ActiveCfg = ReleaseBundle|x86
 		637e6da1-c2f2-45f1-b9e1-9a5465fc52f3.ReleaseBundle|x86.Build.0 = ReleaseBundle|x86
 		637e6da1-c2f2-45f1-b9e1-9a5465fc52f3.ReleaseBundle|x86.Deploy.0 = ReleaseBundle|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Debug|ARM.ActiveCfg = Debug|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Debug|ARM.Build.0 = Debug|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Debug|x64.ActiveCfg = Debug|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Debug|x64.Build.0 = Debug|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Debug|x86.ActiveCfg = Debug|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Debug|x86.Build.0 = Debug|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.DebugBundle|ARM.Build.0 = Debug|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.DebugBundle|x64.ActiveCfg = Debug|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.DebugBundle|x64.Build.0 = Debug|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.DebugBundle|x86.ActiveCfg = Debug|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.DebugBundle|x86.Build.0 = Debug|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Release|ARM.ActiveCfg = Release|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Release|ARM.Build.0 = Release|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Release|x64.ActiveCfg = Release|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Release|x64.Build.0 = Release|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Release|x86.ActiveCfg = Release|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.Release|x86.Build.0 = Release|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.ReleaseBundle|ARM.Build.0 = Release|ARM
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.ReleaseBundle|x64.ActiveCfg = Release|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.ReleaseBundle|x64.Build.0 = Release|x64
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.ReleaseBundle|x86.ActiveCfg = Release|x86
+        {6A1F04D0-8750-11E6-AADE-EB9EAC8D95CF}.ReleaseBundle|x86.Build.0 = Release|x86
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|ARM.ActiveCfg = Debug|ARM
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|ARM.Build.0 = Debug|ARM
 		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|x64.ActiveCfg = Debug|x64
