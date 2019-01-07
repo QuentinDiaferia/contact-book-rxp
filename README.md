@@ -8,7 +8,16 @@ A simple contact book app using ReactXP and NoSQLProvider.
 npm install --save react-native-sqlite-storage
 ```
 
-### Gradle configuration
+### Build on iOS
+
+```
+npm install -g react-native-cli
+react-native link react-native-sqlite-storage
+cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../
+cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh && cd ../../../../
+```
+
+### Build on Android
 
 In `android/app/app.iml`:
 
