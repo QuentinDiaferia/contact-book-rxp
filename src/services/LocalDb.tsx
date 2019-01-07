@@ -61,11 +61,7 @@ class LocalDb {
             return this.getErrorResponse()
         }
         return this.getContactStore(true).then(store => {
-            return store.clearAllData()
-        }).then(() => {
-            return this.getContactStore(true).then(store => {
-                return store.put(contact)
-            })
+            return store.put(contact)
         })
     }
 
