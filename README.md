@@ -19,12 +19,6 @@ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-config
 
 ### Build on Android
 
-In `android/app/app.iml`:
-
-```xml
-<orderEntry type="module" module-name="react-native-sqlite-storage" />
-```
-
 In `android/app/build.gradle`:
 
 ```

@@ -1,16 +1,15 @@
 import React from 'react'
-import {Component, CommonProps, View, Button, Text} from 'reactxp'
+import {Component, CommonProps, View, Text} from 'reactxp'
 
 import {styles} from '../assets/Style'
 
-import Contacts from '../services/Contacts'
+import Contacts from '../api/Contacts'
 import ContactModel from '../models/Contact'
 
 import Loader from './ui/Loader'
 
 interface ContactViewProps extends CommonProps {
     id: string,
-    onNavigateBack: () => void,
 }
 
 interface ContactViewState {
@@ -36,29 +35,52 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             useSafeInsets={true}
             style={styles.container}
         >
-            <View style={styles.contactHeader}>
-                <Button
-                    style={styles.roundButton}
-                    onPress={this.props.onNavigateBack}
-                >
-                    <Text style={styles.buttonText}>
-                        Go Back
-                    </Text>
-                </Button>
-            </View>
             {this.renderItem()}
         </View>
     }
 
     private renderItem() {
-        if (this.state.status === 'LOADING') {
+        const {
+            status,
+            item,
+        } = this.state
+        if (status === 'LOADING') {
             return <Loader />
         }
-        return <View style={styles.container}>
-            <Text>
-                {this.state.item ? this.state.item.name : null}
-            </Text>
-        </View>
+        if (item) {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.row}>
+                        <Text style={styles.twoCols}>
+                            Name:
+                        </Text>
+                        <Text style={styles.twoCols}>
+                            {item.name}
+                        </Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.twoCols}>
+                            E-mail:
+                        </Text>
+                        <Text style={styles.twoCols}>
+                            {item.email}
+                        </Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.twoCols}>
+                            Address:
+                        </Text>
+                        <View style={styles.twoCols}>
+                            <View><Text>{item.address.street}</Text></View>
+                            <View><Text>{item.address.suite}</Text></View>
+                            <View><Text>{item.address.city}</Text></View>
+                            <View><Text>{item.address.zipcode}</Text></View>
+                        </View>
+                    </View>
+                </View>
+            )
+        }
+        return null
     }
 
     private loadItem() {

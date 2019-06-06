@@ -6,7 +6,7 @@ import {styles} from '../assets/Style'
 import {NavigationRouteId} from '../helper/Navigation'
 
 import MainPanel from './MainPanel'
-import ContactPanel from './ContactPanel'
+import ContactList from './ContactList'
 import ContactView from './ContactView'
 
 interface RootState {
@@ -43,12 +43,19 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
     }
 
     private onNavigatorRef = (navigator: Navigator) => {
+        console.log('navigator set')
         this.navigator = navigator
     }
 
     private renderScene = (navigatorRoute: Types.NavigatorRoute) => {
         return <RX.View style={styles.appWrapper}>
-            {this.router(navigatorRoute)}
+            <RX.GestureView
+                style={styles.gestureWrapper}
+                onPanHorizontal={this.goBack}
+                preferredPan={RX.Types.PreferredPanGesture.Horizontal}
+            >
+                {this.router(navigatorRoute)}
+            </RX.GestureView>
         </RX.View>
     }
 
@@ -61,10 +68,9 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
                     />
                 )
 
-            case NavigationRouteId.ContactPanel:
+            case NavigationRouteId.ContactList:
                 return (
-                    <ContactPanel
-                        onNavigateBack={this.onPressBack}
+                    <ContactList
                         goToContactView={this.goToContactView}
                     />
                 )
@@ -72,7 +78,6 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
             case NavigationRouteId.ContactView:
                 return (
                     <ContactView
-                        onNavigateBack={this.onPressBack}
                         id={this.state.contactId}
                     />
                 )
@@ -102,9 +107,18 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
         }
     }
 
-    private onPressBack = () => {
-        if (this.navigator) {
-            this.navigator.pop()
+    private goBack = (gestureState: RX.Types.PanGestureState) => {
+        if (!gestureState.isComplete) {
+            return
         }
+
+        const ratio = gestureState.initialClientX - gestureState.clientX
+        const direction = (ratio > 0) ? 1 : -1
+
+        if (direction !== -1) {
+            return
+        }
+
+        this.navigator!.pop()
     }
 }

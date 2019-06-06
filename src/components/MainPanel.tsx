@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as RX from 'reactxp'
+import {Component, Stateless, Animated, View, Button, Text} from 'reactxp'
 
 import {styles} from '../assets/Style'
 
@@ -9,40 +9,40 @@ interface MainPanelProps {
     onPressNavigate: (routeId: NavigationRouteId) => void
 }
 
-class MainPanel extends RX.Component<MainPanelProps, RX.Stateless> {
-    private translationValue: RX.Animated.Value
+class MainPanel extends Component<MainPanelProps, Stateless> {
+    private translationValue: Animated.Value
 
     constructor(props: MainPanelProps) {
         super(props)
-        this.translationValue = RX.Animated.createValue(-100)
+        this.translationValue = Animated.createValue(-100)
     }
 
     componentDidMount() {
-        RX.Animated.timing(this.translationValue, {
+        Animated.timing(this.translationValue, {
             duration: 500,
             toValue: 0,
-            easing: RX.Animated.Easing.OutBack()
+            easing: Animated.Easing.OutBack()
         }).start()
     }
 
     render() {
-        return <RX.View
+        return <View
             useSafeInsets={true}
             style={styles.container}
         >
-            <RX.Button
+            <Button
                 style={styles.roundButton}
-                onPress={this.goToContactPanel}
+                onPress={this.goToContactList}
             >
-                <RX.Text style={styles.buttonText}>
+                <Text style={styles.buttonText}>
                     Contact book
-                </RX.Text>
-            </RX.Button>
-        </RX.View>
+                </Text>
+            </Button>
+        </View>
     }
 
-    private goToContactPanel = () => {
-        this.props.onPressNavigate(NavigationRouteId.ContactPanel)
+    private goToContactList = () => {
+        this.props.onPressNavigate(NavigationRouteId.ContactList)
     }
 }
 

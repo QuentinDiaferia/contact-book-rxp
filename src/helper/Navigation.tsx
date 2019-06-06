@@ -1,5 +1,5 @@
 export enum NavigationRouteId {
     MainPanel,
-    ContactPanel,
+    ContactList,
     ContactView,
 }

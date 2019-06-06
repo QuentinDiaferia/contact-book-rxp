@@ -1,12 +1,11 @@
 import {DbProvider, DbSchema} from 'nosqlprovider'
+import {DB_NAME, DB_TABLE_CONTACTS} from '../config'
 
-const dbName: string = 'myDb'
-const contactsTableName: string = 'contacts'
 const appSchema: DbSchema = {
     version: 1,
     stores: [
         {
-            name: contactsTableName,
+            name: DB_TABLE_CONTACTS,
             primaryKeyPath: 'id',
         }
     ]
@@ -72,7 +71,7 @@ class LocalDb {
     private openProvider(availableProviders: DbProvider[], index = 0) {
         const provider = availableProviders[index]
         if (provider && index <= availableProviders.length) {
-            provider.open(dbName, appSchema, false, false).then(
+            provider.open(DB_NAME, appSchema, false, false).then(
                 () => {
                     this.db = provider
                 },
@@ -89,8 +88,8 @@ class LocalDb {
         if (!this.db) {
             throw Error('Database not open.')
         } else {
-            return this.db.openTransaction([contactsTableName], writeNeeded).then(tx => {
-                return tx.getStore(contactsTableName)
+            return this.db.openTransaction([DB_TABLE_CONTACTS], writeNeeded).then(tx => {
+                return tx.getStore(DB_TABLE_CONTACTS)
             })
         }
     }

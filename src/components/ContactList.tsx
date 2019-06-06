@@ -1,16 +1,15 @@
 import React from 'react'
-import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
+import {Component, CommonProps, View, ScrollView} from 'reactxp'
 
 import {styles} from '../assets/Style'
 
-import Contacts from '../services/Contacts'
+import Contacts from '../api/Contacts'
 import ContactModel from '../models/Contact'
 
 import Loader from './ui/Loader'
 import ContactItem from './ContactItem'
 
 interface ContactProps extends CommonProps {
-    onNavigateBack: () => void,
     goToContactView: (id: string) => void,
 }
 
@@ -20,7 +19,7 @@ interface ContactState {
     contacts: ContactModel[],
 }
 
-class ContactPanel extends Component<ContactProps, ContactState> {
+class ContactList extends Component<ContactProps, ContactState> {
     constructor(props: ContactProps) {
         super(props)
         this.state = {
@@ -39,16 +38,6 @@ class ContactPanel extends Component<ContactProps, ContactState> {
             useSafeInsets={true}
             style={styles.container}
         >
-            <View style={styles.contactHeader}>
-                <Button
-                    style={styles.roundButton}
-                    onPress={this.props.onNavigateBack}
-                >
-                    <Text style={styles.buttonText}>
-                        Go Back
-                    </Text>
-                </Button>
-            </View>
             {this.renderList()}
         </View>
     }
@@ -100,4 +89,4 @@ class ContactPanel extends Component<ContactProps, ContactState> {
     }
 }
 
-export default ContactPanel
+export default ContactList
