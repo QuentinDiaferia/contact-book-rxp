@@ -1,12 +1,12 @@
 import React from 'react'
 import {Component, CommonProps, View, Text} from 'reactxp'
 
-import {styles} from '../assets/Style'
+import {styles} from '../../assets/Style'
 
-import Contacts from '../api/Contacts'
-import ContactModel from '../models/Contact'
+import Contacts from '../../api/Contacts'
+import ContactModel from '../../models/Contact'
 
-import Loader from './ui/Loader'
+import Loader from '../ui/Loader'
 
 interface ContactViewProps extends CommonProps {
     id: string,
@@ -51,26 +51,26 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             return (
                 <View style={styles.container}>
                     <View style={styles.row}>
-                        <Text style={styles.twoCols}>
+                        <Text style={styles.col2}>
                             Name:
                         </Text>
-                        <Text style={styles.twoCols}>
+                        <Text style={styles.col2}>
                             {item.name}
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.twoCols}>
+                        <Text style={styles.col2}>
                             E-mail:
                         </Text>
-                        <Text style={styles.twoCols}>
+                        <Text style={styles.col2}>
                             {item.email}
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.twoCols}>
+                        <Text style={styles.col2}>
                             Address:
                         </Text>
-                        <View style={styles.twoCols}>
+                        <View style={styles.col2}>
                             <View><Text>{item.address.street}</Text></View>
                             <View><Text>{item.address.suite}</Text></View>
                             <View><Text>{item.address.city}</Text></View>

@@ -1,16 +1,18 @@
 import React from 'react'
-import {Component, CommonProps, View, ScrollView} from 'reactxp'
+import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
 
-import {styles} from '../assets/Style'
+import {styles} from '../../assets/Style'
 
-import Contacts from '../api/Contacts'
-import ContactModel from '../models/Contact'
+import Contacts from '../../api/Contacts'
+import ContactModel from '../../models/Contact'
+import {NavigationRouteId} from '../../helper/Navigation'
 
-import Loader from './ui/Loader'
-import ContactItem from './ContactItem'
+import Loader from '../ui/Loader'
+import ContactItem from './ListItem'
 
 interface ContactProps extends CommonProps {
     goToContactView: (id: string) => void,
+    onPressNavigate: (routeId: NavigationRouteId) => void,
 }
 
 interface ContactState {
@@ -38,6 +40,16 @@ class ContactList extends Component<ContactProps, ContactState> {
             useSafeInsets={true}
             style={styles.container}
         >
+            <View style={styles.contactHeader}>
+                <Button
+                    style={styles.roundButton}
+                    onPress={() => this.props.onPressNavigate(NavigationRouteId.ContactAdd)}
+                >
+                    <Text style={styles.buttonText}>
+                        Add a contact
+                    </Text>
+                </Button>
+            </View>
             {this.renderList()}
         </View>
     }
@@ -57,7 +69,7 @@ class ContactList extends Component<ContactProps, ContactState> {
 
     private loadFromCache() {
         this.setState({status: 'LOADING'})
-        return Contacts.listCache().then(data => {
+        return Contacts.listCache().then((data: ContactModel[]) => {
             this.setItems(data)
         }).catch(() => {
             this.setState({status: 'IDLE'})

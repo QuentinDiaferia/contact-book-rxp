@@ -1,6 +1,10 @@
-import {Styles, UserInterface} from 'reactxp'
+import {Styles, Platform, UserInterface} from 'reactxp'
 
 const dimensions = UserInterface.measureWindow()
+if (Platform.getType() === 'web') {
+    dimensions.width = 800
+}
+
 const globalPadding = 16
 
 export const colors = {
@@ -64,7 +68,34 @@ export const styles = {
         marginTop: 10,
         marginBottom: 10,
     }),
-    twoCols: Styles.createViewStyle({
+    col2: Styles.createViewStyle({
         width: (dimensions.width - globalPadding * 2) / 2,
+    }),
+    col4: Styles.createViewStyle({
+        width: (dimensions.width - globalPadding * 2) / 4,
+    }),
+    flexRow: Styles.createViewStyle({
+        flexDirection: 'row',
+    }),
+    input: [
+        Styles.createViewStyle({
+            width: dimensions.width - globalPadding * 2,
+            borderBottomWidth: 1,
+            borderColor: colors.border,
+            padding: 5,
+            marginTop: 2,
+            marginBottom: 2,
+        }),
+        Styles.createTextStyle({
+            fontSize: 16,
+        }),
+    ],
+    inputError: Styles.createViewStyle({
+        borderColor: colors.primary,
+    }),
+    inputErrorMsg: Styles.createTextStyle({
+        color: colors.primary,
+        width: dimensions.width - globalPadding * 2,
+        fontSize: 12,
     }),
 }

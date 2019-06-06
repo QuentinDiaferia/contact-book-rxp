@@ -6,8 +6,9 @@ import {styles} from '../assets/Style'
 import {NavigationRouteId} from '../helper/Navigation'
 
 import MainPanel from './MainPanel'
-import ContactList from './ContactList'
-import ContactView from './ContactView'
+import ContactList from './Contact/List'
+import ContactView from './Contact/View'
+import ContactAdd from './Contact/Add'
 
 interface RootState {
     contactId: string,
@@ -43,7 +44,6 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
     }
 
     private onNavigatorRef = (navigator: Navigator) => {
-        console.log('navigator set')
         this.navigator = navigator
     }
 
@@ -71,6 +71,7 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
             case NavigationRouteId.ContactList:
                 return (
                     <ContactList
+                        onPressNavigate={this.onPressNavigate}
                         goToContactView={this.goToContactView}
                     />
                 )
@@ -80,6 +81,11 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
                     <ContactView
                         id={this.state.contactId}
                     />
+                )
+
+            case NavigationRouteId.ContactAdd:
+                return (
+                    <ContactAdd />
                 )
         }
 

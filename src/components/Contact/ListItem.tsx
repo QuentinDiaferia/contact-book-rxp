@@ -1,11 +1,11 @@
 import React from 'react'
 import {Component, CommonProps, View, Button, Text} from 'reactxp'
-import {styles} from '../assets/Style'
-import ContactModel from '../models/Contact'
+import {styles} from '../../assets/Style'
+import ContactModel from '../../models/Contact'
 
 interface ContactItemProps extends CommonProps {
-    item: ContactModel,
-    goToContactView: (id: string) => void,
+    item: ContactModel
+    goToContactView: (id: string) => void
 }
 
 class ContactItem extends Component<ContactItemProps> {
