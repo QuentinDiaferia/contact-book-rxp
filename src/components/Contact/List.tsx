@@ -1,19 +1,14 @@
 import React from 'react'
-import {Component, CommonProps, View, ScrollView, Button, Text} from 'reactxp'
+import {Component, View, ScrollView, Button, Text} from 'reactxp'
 
 import {styles} from '../../assets/Style'
 
 import Contacts from '../../api/Contacts'
 import ContactModel from '../../models/Contact'
-import {NavigationRouteId} from '../../helper/Navigation'
+import Navigation, {NavigationRouteId} from '../../helper/Navigation'
 
 import Loader from '../ui/Loader'
 import ContactItem from './ListItem'
-
-interface ContactProps extends CommonProps {
-    goToContactView: (id: string) => void,
-    onPressNavigate: (routeId: NavigationRouteId) => void,
-}
 
 interface ContactState {
     status: string,
@@ -21,8 +16,8 @@ interface ContactState {
     contacts: ContactModel[],
 }
 
-class ContactList extends Component<ContactProps, ContactState> {
-    constructor(props: ContactProps) {
+class ContactList extends Component<{}, ContactState> {
+    constructor(props: {}) {
         super(props)
         this.state = {
             status: 'IDLE',
@@ -43,7 +38,7 @@ class ContactList extends Component<ContactProps, ContactState> {
             <View style={styles.contactHeader}>
                 <Button
                     style={styles.roundButton}
-                    onPress={() => this.props.onPressNavigate(NavigationRouteId.ContactAdd)}
+                    onPress={() => Navigation.goTo(NavigationRouteId.ContactAdd)}
                 >
                     <Text style={styles.buttonText}>
                         Add a contact
@@ -94,7 +89,7 @@ class ContactList extends Component<ContactProps, ContactState> {
                 return <ContactItem
                     item={contact}
                     key={contact.id}
-                    goToContactView={this.props.goToContactView}
+                    goToContactView={() => Navigation.goTo(NavigationRouteId.ContactView)}
                 />
             })}
         </ScrollView>

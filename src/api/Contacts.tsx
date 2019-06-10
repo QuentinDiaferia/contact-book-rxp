@@ -27,6 +27,13 @@ class Contacts {
     getCache(id: string) {
         return LocalDb.getContact(id).then((data: ContactModel) => data)
     }
+
+    create(data: ContactModel) {
+        return axios.post(this.url, data).then((response: {data: ContactModel}) => {
+            LocalDb.putContact(response.data)
+            return response
+        })
+    }
 }
 
 export default new Contacts()

@@ -1,6 +1,8 @@
 import React from 'react'
 import {Component, View, Button, Text} from 'reactxp'
 
+import Contacts from '../../api/Contacts'
+
 import TextInput from '../ui/TextInput'
 
 import {styles} from '../../assets/Style'
@@ -57,6 +59,7 @@ class ContactForm extends Component<{}, ContactFormState> {
                     errorMessage={errors.name}
                 />
                 <TextInput
+                    autoCapitalize="none"
                     returnKeyType="next"
                     placeholder="E-mail"
                     keyboardType="email-address"
@@ -93,21 +96,23 @@ class ContactForm extends Component<{}, ContactFormState> {
 
     private handleSubmit = () => {
         const {form} = this.state
-        const name = form.name ? form.name.trim() : ''
-        const email = form.email ? form.email.trim() : ''
         const errors: FormValues = {}
 
-        if (!name.length) {
+        if (!form.name || !form.name.length) {
             errors.name = 'Required'
         }
 
-        if (!email.length) {
+        if (!form.email || !form.email.length) {
             errors.email = 'Required'
-        } else if (!email.match(/\S+@\S+\.\S+/g)) {
+        } else if (!form.email.match(/\S+@\S+\.\S+/g)) {
             errors.email = 'Format'
         }
 
         this.setState({errors})
+
+        if (!Object.keys(errors).length) {
+            Contacts.create(form)
+        }
     }
 }
 

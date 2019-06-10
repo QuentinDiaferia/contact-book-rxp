@@ -17,7 +17,6 @@ export const colors = {
 export const styles = {
     root: Styles.createViewStyle({
         flex: 1,
-        alignSelf: 'stretch',
         width: dimensions.width,
         height: dimensions.height,
     }),

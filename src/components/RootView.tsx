@@ -3,8 +3,9 @@ import * as RX from 'reactxp'
 import Navigator, { NavigatorDelegateSelector as DelegateSelector, Types } from 'reactxp-navigation'
 
 import {styles} from '../assets/Style'
-import {NavigationRouteId} from '../helper/Navigation'
+import Navigation, {NavigationRouteId} from '../helper/Navigation'
 
+// import Navbar from './Navbar'
 import MainPanel from './MainPanel'
 import ContactList from './Contact/List'
 import ContactView from './Contact/View'
@@ -15,8 +16,6 @@ interface RootState {
 }
 
 export class RootView extends RX.Component<RX.CommonProps, RootState> {
-    private navigator: Navigator | undefined
-
     constructor(props: RX.CommonProps) {
         super(props)
         this.state = {
@@ -25,16 +24,12 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
     }
 
     componentDidMount() {
-        if (this.navigator) {
-            this.navigator.immediatelyResetRouteStack([{
-                routeId: NavigationRouteId.MainPanel,
-                sceneConfigType: Types.NavigatorSceneConfigType.Fade
-            }])
-        }
+        Navigation.resetNavigator()
     }
 
     render() {
         return <RX.View style={styles.root}>
+            {/*<Navbar />*/}
             <Navigator
                 delegateSelector={DelegateSelector}
                 renderScene={this.renderScene}
@@ -44,14 +39,14 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
     }
 
     private onNavigatorRef = (navigator: Navigator) => {
-        this.navigator = navigator
+        Navigation.setNavigator(navigator)
     }
 
     private renderScene = (navigatorRoute: Types.NavigatorRoute) => {
         return <RX.View style={styles.appWrapper}>
             <RX.GestureView
                 style={styles.gestureWrapper}
-                onPanHorizontal={this.goBack}
+                onPanHorizontal={Navigation.handleSwipeLeft}
                 preferredPan={RX.Types.PreferredPanGesture.Horizontal}
             >
                 {this.router(navigatorRoute)}
@@ -63,24 +58,17 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
         switch (navigatorRoute.routeId) {
             case NavigationRouteId.MainPanel:
                 return (
-                    <MainPanel
-                        onPressNavigate={this.onPressNavigate}
-                    />
+                    <MainPanel />
                 )
 
             case NavigationRouteId.ContactList:
                 return (
-                    <ContactList
-                        onPressNavigate={this.onPressNavigate}
-                        goToContactView={this.goToContactView}
-                    />
+                    <ContactList />
                 )
 
             case NavigationRouteId.ContactView:
                 return (
-                    <ContactView
-                        id={this.state.contactId}
-                    />
+                    <ContactView id={this.state.contactId} />
                 )
 
             case NavigationRouteId.ContactAdd:
@@ -90,41 +78,5 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
         }
 
         return null
-    }
-
-    private onPressNavigate = (routeId: NavigationRouteId) => {
-        if (this.navigator) {
-            this.navigator.push({
-                sceneConfigType: Types.NavigatorSceneConfigType.FloatFromRight,
-                routeId,
-            })
-        }
-    }
-
-    private goToContactView = (id: string) => {
-        if (this.navigator) {
-            this.setState({
-                contactId: id,
-            })
-            this.navigator.push({
-                sceneConfigType: Types.NavigatorSceneConfigType.FloatFromRight,
-                routeId: NavigationRouteId.ContactView,
-            })
-        }
-    }
-
-    private goBack = (gestureState: RX.Types.PanGestureState) => {
-        if (!gestureState.isComplete) {
-            return
-        }
-
-        const ratio = gestureState.initialClientX - gestureState.clientX
-        const direction = (ratio > 0) ? 1 : -1
-
-        if (direction !== -1) {
-            return
-        }
-
-        this.navigator!.pop()
     }
 }

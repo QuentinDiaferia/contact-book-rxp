@@ -48,6 +48,7 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             return <Loader />
         }
         if (item) {
+            console.log(item)
             return (
                 <View style={styles.container}>
                     <View style={styles.row}>
@@ -71,10 +72,14 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
                             Address:
                         </Text>
                         <View style={styles.col2}>
-                            <View><Text>{item.address.street}</Text></View>
-                            <View><Text>{item.address.suite}</Text></View>
-                            <View><Text>{item.address.city}</Text></View>
-                            <View><Text>{item.address.zipcode}</Text></View>
+                            {item.address ? (
+                                <React.Fragment>
+                                    <View><Text>{item.address.street}</Text></View>
+                                    <View><Text>{item.address.suite}</Text></View>
+                                    <View><Text>{item.address.city}</Text></View>
+                                    <View><Text>{item.address.zipcode}</Text></View>
+                                </React.Fragment>
+                            ) : null}
                         </View>
                     </View>
                 </View>

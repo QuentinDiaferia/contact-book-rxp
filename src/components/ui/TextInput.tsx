@@ -13,13 +13,25 @@ class TextInput extends RX.Component<TextInputProps> {
         const {
             error,
             errorMessage,
-            ...other
+            autoCapitalize,
+            returnKeyType,
+            keyboardType,
+            placeholder,
+            value,
+            onSubmitEditing,
+            onChangeText,
         } = this.props
         return (
             <React.Fragment>
                 <RX.TextInput
                     style={styles.input}
-                    {...other}
+                    autoCapitalize={autoCapitalize}
+                    returnKeyType={returnKeyType}
+                    keyboardType={keyboardType}
+                    placeholder={placeholder}
+                    value={value}
+                    onSubmitEditing={onSubmitEditing}
+                    onChangeText={onChangeText}
                 />
                 {error && (
                     <RX.Text style={styles.inputErrorMsg}>

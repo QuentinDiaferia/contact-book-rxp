@@ -3,16 +3,12 @@ import {Component, Stateless, Animated, View, Button, Text} from 'reactxp'
 
 import {styles} from '../assets/Style'
 
-import {NavigationRouteId} from '../helper/Navigation'
+import Navigation, {NavigationRouteId} from '../helper/Navigation'
 
-interface MainPanelProps {
-    onPressNavigate: (routeId: NavigationRouteId) => void
-}
-
-class MainPanel extends Component<MainPanelProps, Stateless> {
+class MainPanel extends Component<{}, Stateless> {
     private translationValue: Animated.Value
 
-    constructor(props: MainPanelProps) {
+    constructor(props: {}) {
         super(props)
         this.translationValue = Animated.createValue(-100)
     }
@@ -42,7 +38,7 @@ class MainPanel extends Component<MainPanelProps, Stateless> {
     }
 
     private goToContactList = () => {
-        this.props.onPressNavigate(NavigationRouteId.ContactList)
+        Navigation.goTo(NavigationRouteId.ContactList)
     }
 }
 
