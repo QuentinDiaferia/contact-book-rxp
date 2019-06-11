@@ -5,26 +5,53 @@ import Navigator, { NavigatorDelegateSelector as DelegateSelector, Types } from 
 import {styles} from '../assets/Style'
 import Navigation, {NavigationRouteId} from '../helper/Navigation'
 
-// import Navbar from './Navbar'
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
 import MainPanel from './MainPanel'
 import ContactList from './Contact/List'
 import ContactView from './Contact/View'
 import ContactAdd from './Contact/Add'
 
-export class RootView extends RX.Component {
+interface RootState {
+    displaySidebar: boolean
+}
+
+export class RootView extends RX.Component<RX.CommonProps, RootState> {
+    state = {
+        displaySidebar: false
+    }
+
     componentDidMount() {
         Navigation.resetNavigator()
     }
 
     render() {
         return <RX.View style={styles.root}>
-            {/*<Navbar />*/}
+            <Navbar toggleSidebar={this.toggleSidebar} />
+            <RX.View style={styles.appWrapper}>
+                <Sidebar
+                    display={this.state.displaySidebar}
+                    onNavigate={this.toggleSidebar}
+                />
+                {this.renderApp()}
+            </RX.View>
+        </RX.View>
+    }
+
+    private renderApp = () => {
+        return (
             <Navigator
                 delegateSelector={DelegateSelector}
                 renderScene={this.renderScene}
                 ref={this.onNavigatorRef}
             />
-        </RX.View>
+        )
+    }
+
+    private toggleSidebar = () => {
+        this.setState({
+            displaySidebar: !this.state.displaySidebar,
+        })
     }
 
     private onNavigatorRef = (navigator: Navigator) => {
@@ -32,7 +59,7 @@ export class RootView extends RX.Component {
     }
 
     private renderScene = (navigatorRoute: Types.NavigatorRoute) => {
-        return <RX.View style={styles.appWrapper}>
+        return <RX.View style={styles.mainContent}>
             <RX.GestureView
                 style={styles.gestureWrapper}
                 onPanHorizontal={Navigation.handleSwipeLeft}

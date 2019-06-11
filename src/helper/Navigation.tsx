@@ -25,10 +25,12 @@ class Navigation {
     }
 
     resetNavigator = () => {
-        this.navigator!.immediatelyResetRouteStack([{
-            routeId: NavigationRouteId.MainPanel,
-            sceneConfigType: Types.NavigatorSceneConfigType.Fade
-        }])
+        if (this.navigator) {
+            this.navigator.immediatelyResetRouteStack([{
+                routeId: NavigationRouteId.MainPanel,
+                sceneConfigType: Types.NavigatorSceneConfigType.Fade
+            }])
+        }
     }
 
     goTo = (routeId: NavigationRouteId, data: any = {}) => {

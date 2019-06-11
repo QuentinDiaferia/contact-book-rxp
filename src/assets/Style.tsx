@@ -20,15 +20,49 @@ export const styles = {
         width: dimensions.width,
         height: dimensions.height,
     }),
-    gestureWrapper: Styles.createViewStyle({
-        width: dimensions.width - (globalPadding * 2),
-        height: dimensions.height - (globalPadding * 2),
+    navbar: Styles.createViewStyle({
+        backgroundColor: colors.primary,
+        padding: 5,
+        flexDirection: 'row',
+        height: 40,
+    }),
+    navbarToggleBtn : Styles.createViewStyle({
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        flex: -1,
+    }),
+    navbarToggleTxt: Styles.createTextStyle({
+        fontSize: 25,
+        color: colors.white,
     }),
     appWrapper: Styles.createViewStyle({
+        flexDirection: 'row',
+        height: dimensions.height - 40,
+    }),
+    sidebar: Styles.createViewStyle({
+        height: dimensions.height - 40,
+        backgroundColor: colors.primary,
+    }),
+    sidebarBtn: [
+        Styles.createViewStyle({
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+        }),
+        Styles.createTextStyle({
+            color: colors.white,
+            fontSize: 16,
+        }),
+    ],
+    mainContent: Styles.createViewStyle({
         flex: 1,
         alignSelf: 'stretch',
         padding: globalPadding,
         backgroundColor: colors.white,
+    }),
+    gestureWrapper: Styles.createViewStyle({
+        width: dimensions.width - (globalPadding * 2),
+        height: dimensions.height - (globalPadding * 2),
     }),
     container: Styles.createViewStyle({
         flex: 1,
