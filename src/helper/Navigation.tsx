@@ -10,23 +10,34 @@ export enum NavigationRouteId {
 
 class Navigation {
     private navigator?: Navigator
+    private data?: any
+
+    getData = () => {
+        return this.data
+    }
+
+    clearData = () => {
+        this.data = {}
+    }
 
     setNavigator = (navigator: Navigator) => {
         this.navigator = navigator
     }
 
     resetNavigator = () => {
-        if (this.navigator) {
-            this.navigator.immediatelyResetRouteStack([{
-                routeId: NavigationRouteId.MainPanel,
-                sceneConfigType: Types.NavigatorSceneConfigType.Fade
-            }])
-        }
+        this.navigator!.immediatelyResetRouteStack([{
+            routeId: NavigationRouteId.MainPanel,
+            sceneConfigType: Types.NavigatorSceneConfigType.Fade
+        }])
     }
 
-    goTo = (routeId: NavigationRouteId) => {
-        if (this.navigator) {
-            this.navigator.push({
+    goTo = (routeId: NavigationRouteId, data: any = {}) => {
+        this.data = data
+        const index = this.navigator!.getCurrentRoutes().findIndex(route => route.routeId === routeId)
+        if (index !== -1) {
+            this.navigator!.popToRoute(this.navigator!.getCurrentRoutes()[index])
+        } else {
+            this.navigator!.push({
                 sceneConfigType: Types.NavigatorSceneConfigType.FloatFromRight,
                 routeId,
             })
@@ -34,9 +45,7 @@ class Navigation {
     }
 
     goBack = () => {
-        if (this.navigator) {
-            this.navigator.pop()
-        }
+        this.navigator!.pop()
     }
 
     handleSwipeLeft = (gestureState: RX.Types.PanGestureState) => {

@@ -1,15 +1,17 @@
 import React from 'react'
-import {Component, CommonProps, View, Text} from 'reactxp'
+import * as RX from 'reactxp'
 
 import {styles} from '../../assets/Style'
+
+import Navigation from '../../helper/Navigation'
 
 import Contacts from '../../api/Contacts'
 import ContactModel from '../../models/Contact'
 
 import Loader from '../ui/Loader'
 
-interface ContactViewProps extends CommonProps {
-    id: string,
+interface ContactViewProps extends RX.CommonProps {
+    contactId: string,
 }
 
 interface ContactViewState {
@@ -17,7 +19,7 @@ interface ContactViewState {
     item?: ContactModel,
 }
 
-class ContactView extends Component<ContactViewProps, ContactViewState> {
+class ContactView extends RX.Component<ContactViewProps, ContactViewState> {
     constructor(props: ContactViewProps) {
         super(props)
         this.state = {
@@ -31,12 +33,12 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
     }
 
     render() {
-        return <View
+        return <RX.View
             useSafeInsets={true}
             style={styles.container}
         >
             {this.renderItem()}
-        </View>
+        </RX.View>
     }
 
     private renderItem() {
@@ -48,41 +50,50 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
             return <Loader />
         }
         if (item) {
-            console.log(item)
             return (
-                <View style={styles.container}>
-                    <View style={styles.row}>
-                        <Text style={styles.col2}>
+                <RX.View style={styles.container}>
+                    <RX.View style={styles.row}>
+                        <RX.Text style={styles.col2}>
                             Name:
-                        </Text>
-                        <Text style={styles.col2}>
+                        </RX.Text>
+                        <RX.Text style={styles.col2}>
                             {item.name}
-                        </Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.col2}>
+                        </RX.Text>
+                    </RX.View>
+                    <RX.View style={styles.row}>
+                        <RX.Text style={styles.col2}>
                             E-mail:
-                        </Text>
-                        <Text style={styles.col2}>
+                        </RX.Text>
+                        <RX.Text style={styles.col2}>
                             {item.email}
-                        </Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.col2}>
+                        </RX.Text>
+                    </RX.View>
+                    <RX.View style={styles.row}>
+                        <RX.Text style={styles.col2}>
                             Address:
-                        </Text>
-                        <View style={styles.col2}>
+                        </RX.Text>
+                        <RX.View style={styles.col2}>
                             {item.address ? (
                                 <React.Fragment>
-                                    <View><Text>{item.address.street}</Text></View>
-                                    <View><Text>{item.address.suite}</Text></View>
-                                    <View><Text>{item.address.city}</Text></View>
-                                    <View><Text>{item.address.zipcode}</Text></View>
+                                    <RX.View><RX.Text>{item.address.street}</RX.Text></RX.View>
+                                    <RX.View><RX.Text>{item.address.suite}</RX.Text></RX.View>
+                                    <RX.View><RX.Text>{item.address.city}</RX.Text></RX.View>
+                                    <RX.View><RX.Text>{item.address.zipcode}</RX.Text></RX.View>
                                 </React.Fragment>
                             ) : null}
-                        </View>
-                    </View>
-                </View>
+                        </RX.View>
+                    </RX.View>
+                    {RX.Platform.getType() === 'web' && (
+                        <RX.Button
+                            style={styles.roundButton}
+                            onPress={Navigation.goBack}
+                        >
+                            <RX.Text style={styles.buttonText}>
+                                Back
+                            </RX.Text>
+                        </RX.Button>
+                    )}
+                </RX.View>
             )
         }
         return null
@@ -103,7 +114,7 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
 
     private loadFromCache() {
         this.setState({status: 'LOADING'})
-        return Contacts.getCache(this.props.id).then(data => {
+        return Contacts.getCache(this.props.contactId).then(data => {
             this.setItem(data)
         }).catch(() => {
             this.setState({
@@ -114,7 +125,7 @@ class ContactView extends Component<ContactViewProps, ContactViewState> {
 
     private loadFromAPI() {
         this.setState({status: 'LOADING'})
-        return Contacts.get(this.props.id).then(response => {
+        return Contacts.get(this.props.contactId).then(response => {
             this.setItem(response.data)
         }).catch(() => {
             this.setState({

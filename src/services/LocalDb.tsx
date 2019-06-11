@@ -19,7 +19,7 @@ class LocalDb {
         this.openProvider(availableProviders)
     }
 
-    getAllContacts() {
+    listContacts() {
         if (!this.cacheEnabled) {
             return this.getErrorResponse()
         }

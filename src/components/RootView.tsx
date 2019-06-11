@@ -11,18 +11,7 @@ import ContactList from './Contact/List'
 import ContactView from './Contact/View'
 import ContactAdd from './Contact/Add'
 
-interface RootState {
-    contactId: string,
-}
-
-export class RootView extends RX.Component<RX.CommonProps, RootState> {
-    constructor(props: RX.CommonProps) {
-        super(props)
-        this.state = {
-            contactId: ''
-        }
-    }
-
+export class RootView extends RX.Component {
     componentDidMount() {
         Navigation.resetNavigator()
     }
@@ -68,7 +57,7 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
 
             case NavigationRouteId.ContactView:
                 return (
-                    <ContactView id={this.state.contactId} />
+                    <ContactView {...Navigation.getData()} />
                 )
 
             case NavigationRouteId.ContactAdd:

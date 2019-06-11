@@ -1,7 +1,9 @@
 import React from 'react'
-import {Component, View, Button, Text} from 'reactxp'
+import * as RX from 'reactxp'
 
+import Navigation, {NavigationRouteId} from '../../helper/Navigation'
 import Contacts from '../../api/Contacts'
+import ContactModel from '../../models/Contact'
 
 import TextInput from '../ui/TextInput'
 
@@ -15,9 +17,10 @@ interface FormValues {
 interface ContactFormState {
     form: FormValues
     errors: FormValues
+    globalError?: string
 }
 
-class ContactForm extends Component<{}, ContactFormState> {
+class ContactForm extends RX.Component<{}, ContactFormState> {
     constructor(props: {}) {
         super(props)
         this.state = {
@@ -33,21 +36,27 @@ class ContactForm extends Component<{}, ContactFormState> {
     }
 
     render() {
-        return <View
+        return <RX.View
             useSafeInsets={true}
             style={styles.container}
         >
             {this.renderForm()}
-        </View>
+        </RX.View>
     }
 
     private renderForm() {
         const {
             form,
             errors,
+            globalError,
         } = this.state
         return (
-            <View style={styles.container}>
+            <RX.View style={styles.container}>
+                {globalError ? (
+                    <RX.Text>
+                        {globalError}
+                    </RX.Text>
+                ) : null}
                 <TextInput
                     autoCapitalize="words"
                     returnKeyType="next"
@@ -69,15 +78,27 @@ class ContactForm extends Component<{}, ContactFormState> {
                     error={!!errors.email}
                     errorMessage={errors.email}
                 />
-                <Button
-                    style={styles.roundButton}
-                    onPress={this.handleSubmit}
-                >
-                    <Text style={styles.buttonText}>
-                        Save
-                    </Text>
-                </Button>
-            </View>
+                <RX.View style={styles.row}>
+                    {RX.Platform.getType() === 'web' && (
+                        <RX.Button
+                            style={styles.roundButton}
+                            onPress={Navigation.goBack}
+                        >
+                            <RX.Text style={styles.buttonText}>
+                                Back
+                            </RX.Text>
+                        </RX.Button>
+                    )}
+                    <RX.Button
+                        style={styles.roundButton}
+                        onPress={this.handleSubmit}
+                    >
+                        <RX.Text style={styles.buttonText}>
+                            Save
+                        </RX.Text>
+                    </RX.Button>
+                </RX.View>
+            </RX.View>
         )
     }
 
@@ -111,7 +132,13 @@ class ContactForm extends Component<{}, ContactFormState> {
         this.setState({errors})
 
         if (!Object.keys(errors).length) {
-            Contacts.create(form)
+            Contacts.create(form as ContactModel).then(() => {
+                Navigation.goTo(NavigationRouteId.ContactList)
+            }).catch(() => {
+                this.setState({
+                    globalError: 'Request error',
+                })
+            })
         }
     }
 }

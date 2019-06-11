@@ -14,7 +14,7 @@ class Contacts {
     }
 
     listCache() {
-        return LocalDb.getAllContacts().then((data: ContactModel[]) => data)
+        return LocalDb.listContacts().then((data: ContactModel[]) => data)
     }
 
     get(id: string) {

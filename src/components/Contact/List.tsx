@@ -89,7 +89,7 @@ class ContactList extends Component<{}, ContactState> {
                 return <ContactItem
                     item={contact}
                     key={contact.id}
-                    goToContactView={() => Navigation.goTo(NavigationRouteId.ContactView)}
+                    goToContactView={(contactId: string) => Navigation.goTo(NavigationRouteId.ContactView, {contactId})}
                 />
             })}
         </ScrollView>
