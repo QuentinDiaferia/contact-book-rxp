@@ -1,12 +1,18 @@
 import React from 'react'
-import {Component, ActivityIndicator} from 'reactxp'
+import * as RX from 'reactxp'
 
-class Loader extends Component {
+import {styles} from '../../assets/Style'
+
+class Loader extends RX.Component {
     render() {
-        return <ActivityIndicator
-            color='#848484'
-            size='large'
-        />
+        return (
+            <RX.View style={styles.container}>
+                <RX.ActivityIndicator
+                    color='#848484'
+                    size='large'
+                />
+            </RX.View>
+        )
     }
 }
 

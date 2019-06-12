@@ -22,10 +22,7 @@ class MainPanel extends Component<{}, Stateless> {
     }
 
     render() {
-        return <View
-            useSafeInsets={true}
-            style={styles.container}
-        >
+        return <View style={styles.buttonWrapper}>
             <Button
                 style={styles.roundButton}
                 onPress={this.goToContactList}

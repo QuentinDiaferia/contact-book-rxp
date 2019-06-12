@@ -78,7 +78,7 @@ class ContactForm extends RX.Component<{}, ContactFormState> {
                     error={!!errors.email}
                     errorMessage={errors.email}
                 />
-                <RX.View style={styles.row}>
+                <RX.View style={styles.buttonWrapper}>
                     {RX.Platform.getType() === 'web' && (
                         <RX.Button
                             style={styles.roundButton}

@@ -5,12 +5,15 @@ import {colors, dimensions} from '../assets/Style'
 
 import Navigation, {NavigationRouteId} from '../helper/Navigation'
 
+const NAVBAR_HEIGHT = 40
+const SIDEBAR_WIDTH = 120
+
 const styles = {
     navbar: RX.Styles.createViewStyle({
-        backgroundColor: colors.primary,
+        backgroundColor: colors.navbar,
         padding: 5,
         flexDirection: 'row',
-        height: 40,
+        height: NAVBAR_HEIGHT,
     }),
     navbarToggleBtn : RX.Styles.createViewStyle({
         paddingVertical: 5,
@@ -23,13 +26,12 @@ const styles = {
         color: colors.white,
     }),
     sidebar: RX.Styles.createViewStyle({
-        height: dimensions.height - 40,
-        width: 120,
-        backgroundColor: colors.primary,
+        height: dimensions.height - NAVBAR_HEIGHT,
+        backgroundColor: colors.sidebar,
     }),
     sidebarBtn: RX.Styles.createViewStyle({
-            paddingHorizontal: 20,
-            paddingVertical: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
     }),
     sidebarBtnTxt: RX.Styles.createTextStyle({
         color: colors.white,
@@ -37,7 +39,10 @@ const styles = {
     }),
     appWrapper: RX.Styles.createViewStyle({
         flexDirection: 'row',
-        height: dimensions.height - 40,
+        height: dimensions.height - NAVBAR_HEIGHT,
+    }),
+    mainContent: RX.Styles.createViewStyle({
+        height: dimensions.height - NAVBAR_HEIGHT,
     }),
 }
 
@@ -50,11 +55,14 @@ class Navbar extends RX.Component<{}, NavbarState> {
         displaySidebar: false,
     }
 
-    private animationValue = RX.Animated.createValue(-120)
-    private animationStyle = RX.Styles.createAnimatedViewStyle({
-        transform: [{
-            translateX: this.animationValue,
-        }]
+    private sidebarWidthValue = RX.Animated.createValue(0)
+    private sidebarWidthStyle = RX.Styles.createAnimatedViewStyle({
+        width: this.sidebarWidthValue,
+    })
+
+    private contentWidthValue = RX.Animated.createValue(dimensions.width)
+    private contentWidthStyle = RX.Styles.createAnimatedViewStyle({
+        width: this.contentWidthValue,
     })
 
     render() {
@@ -69,24 +77,26 @@ class Navbar extends RX.Component<{}, NavbarState> {
                 </RX.View>
                 <RX.View style={styles.appWrapper}>
                     {this.state.displaySidebar ? (
-                        <RX.Animated.View style={this.animationStyle}>
-                            <RX.View style={styles.sidebar}>
-                                <RX.Button
-                                    style={styles.sidebarBtn}
-                                    onPress={this.handlePress(NavigationRouteId.MainPanel)}
-                                >
-                                    <RX.Text style={styles.sidebarBtnTxt}>Home</RX.Text>
-                                </RX.Button>
-                                <RX.Button
-                                    style={styles.sidebarBtn}
-                                    onPress={this.handlePress(NavigationRouteId.ContactList)}
-                                >
-                                    <RX.Text style={styles.sidebarBtnTxt}>Contacts</RX.Text>
-                                </RX.Button>
-                            </RX.View>
+                        <RX.Animated.View style={[styles.sidebar, this.sidebarWidthStyle]}>
+                            <RX.Button
+                                style={styles.sidebarBtn}
+                                onPress={this.handlePress(NavigationRouteId.MainPanel)}
+                            >
+                                <RX.Text style={styles.sidebarBtnTxt}>Home</RX.Text>
+                            </RX.Button>
+                            <RX.Button
+                                style={styles.sidebarBtn}
+                                onPress={this.handlePress(NavigationRouteId.ContactList)}
+                            >
+                                <RX.Text style={styles.sidebarBtnTxt}>Contacts</RX.Text>
+                            </RX.Button>
                         </RX.Animated.View>
                     ) : null}
-                    {this.props.children}
+                    <RX.Animated.View
+                        style={this.contentWidthStyle}
+                    >
+                        {this.props.children}
+                    </RX.Animated.View>
                 </RX.View>
             </React.Fragment>
         )
@@ -99,10 +109,16 @@ class Navbar extends RX.Component<{}, NavbarState> {
 
     private toggleSidebar = () => {
         if (this.state.displaySidebar) {
-            RX.Animated.timing(this.animationValue, {
-                toValue: -120,
-                duration: 200,
-            }).start(() => {
+            RX.Animated.parallel([
+                RX.Animated.timing(this.sidebarWidthValue, {
+                    toValue: 0,
+                    duration: 200,
+                }),
+                RX.Animated.timing(this.contentWidthValue, {
+                    toValue: dimensions.width,
+                    duration: 200,
+                }),
+            ]).start(() => {
                 this.setState({
                     displaySidebar: !this.state.displaySidebar,
                 })
@@ -111,10 +127,16 @@ class Navbar extends RX.Component<{}, NavbarState> {
             this.setState({
                 displaySidebar: !this.state.displaySidebar,
             }, () => {
-                RX.Animated.timing(this.animationValue, {
-                    toValue: 0,
-                    duration: 200,
-                }).start()
+                RX.Animated.parallel([
+                    RX.Animated.timing(this.sidebarWidthValue, {
+                        toValue: SIDEBAR_WIDTH,
+                        duration: 200,
+                    }),
+                    RX.Animated.timing(this.contentWidthValue, {
+                        toValue: dimensions.width - SIDEBAR_WIDTH,
+                        duration: 200,
+                    }),
+                ]).start()
             })
         }
     }

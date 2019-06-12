@@ -31,19 +31,18 @@ class ContactList extends Component<{}, ContactState> {
     }
 
     render() {
-        return <View
-            useSafeInsets={true}
-            style={styles.container}
-        >
+        return <View style={styles.container}>
             <View style={styles.contactHeader}>
-                <Button
-                    style={styles.roundButton}
-                    onPress={() => Navigation.goTo(NavigationRouteId.ContactAdd)}
-                >
-                    <Text style={styles.buttonText}>
-                        Add a contact
-                    </Text>
-                </Button>
+                <View style={styles.buttonWrapper}>
+                    <Button
+                        style={styles.roundButton}
+                        onPress={() => Navigation.goTo(NavigationRouteId.ContactAdd)}
+                    >
+                        <Text style={styles.buttonText}>
+                            Add a contact
+                        </Text>
+                    </Button>
+                </View>
             </View>
             {this.renderList()}
         </View>

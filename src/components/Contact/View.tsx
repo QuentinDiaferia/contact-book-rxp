@@ -33,15 +33,6 @@ class ContactView extends RX.Component<ContactViewProps, ContactViewState> {
     }
 
     render() {
-        return <RX.View
-            useSafeInsets={true}
-            style={styles.container}
-        >
-            {this.renderItem()}
-        </RX.View>
-    }
-
-    private renderItem() {
         const {
             status,
             item,
@@ -84,14 +75,16 @@ class ContactView extends RX.Component<ContactViewProps, ContactViewState> {
                         </RX.View>
                     </RX.View>
                     {RX.Platform.getType() === 'web' && (
-                        <RX.Button
-                            style={styles.roundButton}
-                            onPress={Navigation.goBack}
-                        >
-                            <RX.Text style={styles.buttonText}>
-                                Back
-                            </RX.Text>
-                        </RX.Button>
+                        <RX.View style={styles.buttonWrapper}>
+                            <RX.Button
+                                style={styles.roundButton}
+                                onPress={Navigation.goBack}
+                            >
+                                <RX.Text style={styles.buttonText}>
+                                    Back
+                                </RX.Text>
+                            </RX.Button>
+                        </RX.View>
                     )}
                 </RX.View>
             )

@@ -12,6 +12,8 @@ export const colors = {
     secondary: '#c2cfd7',
     border: '#475159',
     white: '#fff',
+    navbar: '#852015',
+    sidebar: '#b12a1c',
 }
 
 export const styles = {
@@ -27,12 +29,10 @@ export const styles = {
         backgroundColor: colors.white,
     }),
     gestureWrapper: Styles.createViewStyle({
-        width: dimensions.width - (dimensions.globalPadding * 2),
-        height: dimensions.height - (dimensions.globalPadding * 2),
+        height: dimensions.height,
     }),
     container: Styles.createViewStyle({
         flex: 1,
-        alignItems: 'center',
     }),
     contactHeader: Styles.createViewStyle({
         height: 60,
@@ -41,6 +41,12 @@ export const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
+    }),
+    buttonWrapper: Styles.createViewStyle({
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
     }),
     roundButton: Styles.createViewStyle({
         margin: 16,
@@ -63,27 +69,27 @@ export const styles = {
         textDecorationLine: 'underline',
     }),
     row: Styles.createViewStyle({
+        flex: 0,
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 10,
     }),
     col2: Styles.createViewStyle({
-        width: (dimensions.width - dimensions.globalPadding * 2) / 2,
-    }),
-    col4: Styles.createViewStyle({
-        width: (dimensions.width - dimensions.globalPadding * 2) / 4,
+        flex: 1,
+        flexBasis: 0.5,
     }),
     flexRow: Styles.createViewStyle({
         flexDirection: 'row',
     }),
     input: [
         Styles.createViewStyle({
-            width: dimensions.width - dimensions.globalPadding * 2,
-            borderBottomWidth: 1,
-            borderColor: colors.border,
             padding: 5,
             marginTop: 2,
             marginBottom: 2,
+        }),
+        Styles.createTextInputStyle({
+            borderBottomWidth: 1,
+            borderColor: colors.border,
         }),
         Styles.createTextStyle({
             fontSize: 16,
