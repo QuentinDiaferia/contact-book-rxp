@@ -1,11 +1,11 @@
 import {Styles, Platform, UserInterface} from 'reactxp'
 
-const dimensions = UserInterface.measureWindow()
-if (Platform.getType() === 'web') {
-    dimensions.width = 800
-}
+const measuredWindow = UserInterface.measureWindow()
 
-const globalPadding = 16
+export const dimensions = Object.assign({}, measuredWindow, {
+    width: Platform.getType() === 'web' ? 800 : measuredWindow.width,
+    globalPadding: 16,
+})
 
 export const colors = {
     primary: '#852015',
@@ -20,49 +20,15 @@ export const styles = {
         width: dimensions.width,
         height: dimensions.height,
     }),
-    navbar: Styles.createViewStyle({
-        backgroundColor: colors.primary,
-        padding: 5,
-        flexDirection: 'row',
-        height: 40,
-    }),
-    navbarToggleBtn : Styles.createViewStyle({
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 5,
-        flex: -1,
-    }),
-    navbarToggleTxt: Styles.createTextStyle({
-        fontSize: 25,
-        color: colors.white,
-    }),
-    appWrapper: Styles.createViewStyle({
-        flexDirection: 'row',
-        height: dimensions.height - 40,
-    }),
-    sidebar: Styles.createViewStyle({
-        height: dimensions.height - 40,
-        backgroundColor: colors.primary,
-    }),
-    sidebarBtn: [
-        Styles.createViewStyle({
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-        }),
-        Styles.createTextStyle({
-            color: colors.white,
-            fontSize: 16,
-        }),
-    ],
     mainContent: Styles.createViewStyle({
         flex: 1,
         alignSelf: 'stretch',
-        padding: globalPadding,
+        padding: dimensions.globalPadding,
         backgroundColor: colors.white,
     }),
     gestureWrapper: Styles.createViewStyle({
-        width: dimensions.width - (globalPadding * 2),
-        height: dimensions.height - (globalPadding * 2),
+        width: dimensions.width - (dimensions.globalPadding * 2),
+        height: dimensions.height - (dimensions.globalPadding * 2),
     }),
     container: Styles.createViewStyle({
         flex: 1,
@@ -102,17 +68,17 @@ export const styles = {
         marginBottom: 10,
     }),
     col2: Styles.createViewStyle({
-        width: (dimensions.width - globalPadding * 2) / 2,
+        width: (dimensions.width - dimensions.globalPadding * 2) / 2,
     }),
     col4: Styles.createViewStyle({
-        width: (dimensions.width - globalPadding * 2) / 4,
+        width: (dimensions.width - dimensions.globalPadding * 2) / 4,
     }),
     flexRow: Styles.createViewStyle({
         flexDirection: 'row',
     }),
     input: [
         Styles.createViewStyle({
-            width: dimensions.width - globalPadding * 2,
+            width: dimensions.width - dimensions.globalPadding * 2,
             borderBottomWidth: 1,
             borderColor: colors.border,
             padding: 5,
@@ -128,7 +94,7 @@ export const styles = {
     }),
     inputErrorMsg: Styles.createTextStyle({
         color: colors.primary,
-        width: dimensions.width - globalPadding * 2,
+        width: dimensions.width - dimensions.globalPadding * 2,
         fontSize: 12,
     }),
 }

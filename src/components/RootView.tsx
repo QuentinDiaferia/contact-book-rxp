@@ -6,35 +6,21 @@ import {styles} from '../assets/Style'
 import Navigation, {NavigationRouteId} from '../helper/Navigation'
 
 import Navbar from './Navbar'
-import Sidebar from './Sidebar'
 import MainPanel from './MainPanel'
 import ContactList from './Contact/List'
 import ContactView from './Contact/View'
 import ContactAdd from './Contact/Add'
 
-interface RootState {
-    displaySidebar: boolean
-}
-
-export class RootView extends RX.Component<RX.CommonProps, RootState> {
-    state = {
-        displaySidebar: false
-    }
-
+export class RootView extends RX.Component<RX.CommonProps> {
     componentDidMount() {
         Navigation.resetNavigator()
     }
 
     render() {
         return <RX.View style={styles.root}>
-            <Navbar toggleSidebar={this.toggleSidebar} />
-            <RX.View style={styles.appWrapper}>
-                <Sidebar
-                    display={this.state.displaySidebar}
-                    onNavigate={this.toggleSidebar}
-                />
+            <Navbar>
                 {this.renderApp()}
-            </RX.View>
+            </Navbar>
         </RX.View>
     }
 
@@ -46,12 +32,6 @@ export class RootView extends RX.Component<RX.CommonProps, RootState> {
                 ref={this.onNavigatorRef}
             />
         )
-    }
-
-    private toggleSidebar = () => {
-        this.setState({
-            displaySidebar: !this.state.displaySidebar,
-        })
     }
 
     private onNavigatorRef = (navigator: Navigator) => {
